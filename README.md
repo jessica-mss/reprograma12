@@ -51,10 +51,47 @@ Exemplos de SGBD:
 ## Demandas + respostas da Atividade
 
   * Criar um banco de dados novo;
+```http
+use reprogramaflix
+```
+  
   * Criar uma coleção;
+```http
+db.createCollection('series')
+```
+  
   * Inserção de documentos;
+```http
+  db.series.insertMany([<arquivo Series.json>]);
+```
+
   * Atualização de documentos;
+```http
+db.getCollection('series').update(
+{"id": "1"},
+{$set:{"title": "Game of Thrones - atualizado de acordo com demanda da atividade"}},
+{"multi": false}
+);
+```
+
   * Exclusão de documentos;
-  * Consulta com projeção;
+```http
+db.series.deleteOne(
+{"id":"11"}
+);
+```
+
+  * Consulta com projeção - Lista de séries de genero "Aventura e "Drama".
+```http
+ db.getCollection('series').find({'genre':'Aventura', 'Drama'});
+ ```
+ 
   * Consulta utilizando combinação entre os seletores;
+```http
+ db.getCollection('series').find({'genre':'Romance', 'totalSeasons':{$gt:8}});
+ ```
+
   * Consulta paginada e ordenada (utilizar *skip*, *limit* e *sort*).
+ ```http
+ db.getCollection('series').find({'categoria':'Crime'}).sort({id:1}).skip(2).limite(1);
+ ```
